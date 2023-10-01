@@ -1,0 +1,29 @@
+service: monitoring
+
+provider:
+  name: aws
+  runtime: python3.10
+  region: eu-central-1
+  environment:
+    MONITOR_MONGO_URI: ${env:MONITOR_MONGO_URI}
+    FOOD_STAGING_URI: ${env:FOOD_STAGING_URI}
+    OLX_URI: ${env:OLX_URI}
+
+package:
+  include:
+    - aws_handler.py
+
+custom:
+  pythonRequirements:
+    fileName: requirements.txt
+    pythonBin: python
+    useDownloadCache: true
+
+functions:
+  supply:
+    handler: aws_handlers.all_monitor
+    events:
+      - schedule: cron(*/15 * * * * *)
+
+plugins:
+  - serverless-python-requirements
