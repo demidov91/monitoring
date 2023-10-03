@@ -6,12 +6,20 @@ provider:
   region: eu-central-1
   environment:
     MONITOR_MONGO_URI: ${env:MONITOR_MONGO_URI}
+
     FOOD_STAGING_URI: ${env:FOOD_STAGING_URI}
+    FOOD_LIVE_URI: ${env:FOOD_STAGING_URI}
     OLX_URI: ${env:OLX_URI}
 
+    FOOD_STAGING_DB: ${env:FOOD_STAGING_DB}
+    FOOD_LIVE_DB: ${env:FOOD_LIVE_DB}
+    OLX_DB: ${env:OLX_DB}
+
 package:
+  exclude:
+    - ./**
   include:
-    - aws_handler.py
+    - aws_handlers.py
 
 custom:
   pythonRequirements:
@@ -23,7 +31,7 @@ functions:
   supply:
     handler: aws_handlers.all_monitor
     events:
-      - schedule: cron(*/15 * * * * *)
+      - schedule: rate(15 minutes)
 
 plugins:
   - serverless-python-requirements

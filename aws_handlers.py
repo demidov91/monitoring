@@ -74,7 +74,7 @@ class FoodUsersMonitor(BaseMonitor):
         ]
 
 
-def all_monitor():
+def all_monitor(event, context):
     monitors = [
         OlxMonitor('OLX_URI', 'OLX_DB', 'subscription'),
         FoodUsersMonitor('FOOD_STAGING_URI', 'FOOD_STAGING_DB', 'users', environment='staging'),
