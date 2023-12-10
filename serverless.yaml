@@ -31,7 +31,7 @@ functions:
   supply:
     handler: aws_handlers.all_monitor
     events:
-      - schedule: rate(15 minutes)
+      - schedule: rate(6 hours)
 
 plugins:
   - serverless-python-requirements
